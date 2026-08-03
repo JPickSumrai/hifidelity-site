@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hi_Fidelity — your AI context, owned and portable</title>
+<meta name="description" content="Capture a conversation from Claude, ChatGPT, or Gemini and carry it to any other. A browser extension by Pickering Design Group. Local-first, user-owned." />
+<meta property="og:title" content="Hi_Fidelity — your AI context, owned and portable" />
+<meta property="og:description" content="Capture a conversation from Claude, ChatGPT, or Gemini and carry it to any other. Local-first, user-owned." />
+<meta property="og:type" content="website" />
+
+<style>
+  :root{
+    --ink:#0B0E11;
+    --panel:#141A1F;
+    --hair:#26303A;
+    --paper:#E9E6DF;
+    --muted:#7C8893;
+    --brass:#C9A24B;
+    --teal:#3FB7A6;
+    --maxw:720px;
+    --serif:ui-serif,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:var(--sans); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--hair) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+    background-size:64px 64px; opacity:.05; pointer-events:none; z-index:0;
+  }
+  .wrap{
+    position:relative; z-index:1; max-width:var(--maxw); margin:0 auto;
+    padding:clamp(28px,7vw,72px) clamp(20px,6vw,40px) 80px;
+  }
+  .stamp{
+    font-family:var(--mono); font-size:12px; letter-spacing:.08em;
+    color:var(--muted); text-transform:uppercase;
+    display:flex; flex-wrap:wrap; gap:6px 18px; align-items:baseline;
+    padding-bottom:18px; border-bottom:1px solid var(--hair);
+  }
+  .stamp .brand{color:var(--brass);}
+  .stamp .status{margin-left:auto;}
+  h1{
+    font-family:var(--serif); font-weight:400;
+    font-size:clamp(34px,7.5vw,58px); line-height:1.04;
+    letter-spacing:-.012em; margin:48px 0 12px;
+  }
+  h1 em{font-style:italic; color:var(--brass);}
+  .deck{
+    font-family:var(--serif); font-size:clamp(18px,3.4vw,21px);
+    color:var(--muted); font-style:italic; margin:0 0 8px;
+  }
+  h2{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--brass);
+    margin:52px 0 18px; font-weight:400;
+  }
+  p{margin:0 0 20px;}
+  .lede{font-family:var(--serif); font-size:clamp(20px,3.8vw,24px); line-height:1.4;}
+  strong{color:var(--paper); font-weight:600;}
+  .rule{border:0; border-top:1px solid var(--hair); margin:44px 0;}
+
+  .steps{list-style:none; padding:0; margin:0; counter-reset:s;}
+  .steps li{
+    counter-increment:s; position:relative;
+    padding:0 0 18px 44px; margin:0;
+  }
+  .steps li::before{
+    content:counter(s,decimal-leading-zero);
+    position:absolute; left:0; top:2px;
+    font-family:var(--mono); font-size:12px; color:var(--brass);
+    letter-spacing:.08em;
+  }
+  .steps b{display:block; color:var(--paper);}
+  .steps span{color:var(--muted); font-size:15.5px;}
+
+  .tiers{display:grid; grid-template-columns:1fr; gap:14px; margin:0;}
+  @media(min-width:560px){.tiers{grid-template-columns:1fr 1fr;}}
+  .tier{
+    border:1px solid var(--hair); border-radius:2px;
+    background:var(--panel); padding:22px 24px;
+  }
+  .tier .name{
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:6px;
+  }
+  .tier .price{font-family:var(--serif); font-size:30px; line-height:1.1; margin-bottom:12px;}
+  .tier .price small{font-size:14px; color:var(--muted); font-family:var(--mono);}
+  .tier ul{margin:0; padding-left:18px; color:var(--muted); font-size:15px;}
+  .tier li{margin:4px 0;}
+  .tier.pro{border-color:var(--brass);}
+
+  .note{
+    border-left:2px solid var(--teal); background:var(--panel);
+    padding:18px 22px; margin:0 0 20px; color:var(--muted); font-size:15.5px;
+  }
+  .note b{color:var(--teal); font-family:var(--mono); font-size:12px;
+    letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:6px;}
+
+  a{color:var(--brass); text-decoration:none; border-bottom:1px solid rgba(201,162,75,.35);}
+  a:hover{border-bottom-color:var(--brass);}
+
+  footer{
+    margin-top:56px; padding-top:22px; border-top:1px solid var(--hair);
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:8px 22px;
+  }
+  footer .who{width:100%; margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="stamp">
+    <span class="brand">Hi_Fidelity</span>
+    <span>Pickering Design Group</span>
+    <span class="status">Pre-launch</span>
+  </div>
+
+  <h1>Your AI context is <em>an asset you own</em>.</h1>
+  <p class="deck">Capture it on any platform. Carry it to any other.</p>
+
+  <p class="lede">You build real thinking inside an AI conversation — the constraints, the decisions, the dead ends already ruled out. Then you open a different assistant and start from nothing.</p>
+
+  <p>Hi_Fidelity is a browser extension that makes that context portable. Capture a thread from Claude, ChatGPT, or Gemini with one click, then inject it into a conversation anywhere else. The continuity is yours, not the platform's.</p>
+
+  <hr class="rule" />
+
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><b>Capture</b><span>Click capture on a conversation worth keeping. Nothing is recorded in the background — only what you choose, when you choose it.</span></li>
+    <li><b>Keep</b><span>Sessions are stored in your browser, color-coded by source, searchable by keyword or platform. The most recent 100 are retained.</span></li>
+    <li><b>Carry</b><span>One click inserts a saved session's context into your current chat, on any supported platform.</span></li>
+  </ol>
+
+  <h2>Pricing</h2>
+  <div class="tiers">
+    <div class="tier">
+      <div class="name">Free</div>
+      <div class="price">$0</div>
+      <ul>
+        <li>Unlimited capture</li>
+        <li>Search and filter</li>
+        <li>Context injection</li>
+        <li>Local summaries</li>
+        <li>No account, no key</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="name">Pro</div>
+      <div class="price">$15 <small>/ month</small></div>
+      <ul>
+        <li>Everything in Free</li>
+        <li>AI summaries — title, key decisions, open threads</li>
+        <li>8,000,000 tokens / month</li>
+        <li>Bring your own key for more</li>
+        <li>Up to 2 devices</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>What leaves your device</h2>
+  <p>By default, nothing. Capture and storage run entirely in your browser. Conversation text is sent out only if you turn on AI summarization — to our proxy and Google's Gemini API, or directly to a provider whose key you supplied. Nothing is retained on our servers after a summary is generated.</p>
+  <p>Read the full <a href="/privacy">privacy policy</a>.</p>
+
+  <h2>Status</h2>
+  <div class="note">
+    <b>Not yet available</b>
+    Hi_Fidelity is in review for the Chrome Web Store. This page will carry the install link once it is live.
+  </div>
+
+  <footer>
+    <span class="who">Pickering Design Group — Systems of Trust · Local First · Portability · Integrity</span>
+    <a href="/privacy">Privacy</a>
+    <a href="/exchange">The Exchange</a>
+    <a href="mailto:pdg.sumrai@gmail.com">Contact</a>
+  </footer>
+
+</div>
+</body>
+</html>

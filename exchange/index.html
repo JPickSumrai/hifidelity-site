@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Exchange — Pickering Design Group</title>
+<meta name="description" content="Cognitive Layers are portable, user-owned cognitive structures. Trust is infrastructure; access is a gate, not a flag. A dated public claim by Pickering Design Group." />
+
+<!-- Open Graph: the social-share card also carries the dated claim -->
+<meta property="og:title" content="The Exchange — A Manifesto" />
+<meta property="og:description" content="What you build with a machine is yours. Cognitive Layers, owned and traded. Filed June 16, 2026 by Pickering Design Group." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --ink:#0B0E11;        /* deep cool near-black */
+    --panel:#141A1F;      /* raised filing panel */
+    --hair:#26303A;       /* hairline rules */
+    --paper:#E9E6DF;      /* warm document ink-on-white */
+    --muted:#7C8893;      /* coordinates / captions */
+    --brass:#C9A24B;      /* the stake — survey-marker brass */
+    --teal:#3FB7A6;       /* live / active state only */
+    --maxw:720px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* faint surveyor grid — structure as backdrop, never loud */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--hair) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.05;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative; z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:clamp(28px,7vw,72px) clamp(20px,6vw,40px) 80px;
+  }
+
+  /* ---- masthead / claim stamp ---- */
+  .stamp{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    text-transform:uppercase;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    align-items:baseline;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--hair);
+  }
+  .stamp .filed{color:var(--brass);}
+  .stamp .id{margin-left:auto;}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:48px 0 18px;
+  }
+
+  h1{
+    font-family:"Newsreader",Georgia,serif;
+    font-weight:400;
+    font-size:clamp(34px,7.5vw,58px);
+    line-height:1.04;
+    letter-spacing:-0.012em;
+    margin:0 0 8px;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--brass);
+  }
+  .deck{
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(18px,3.4vw,21px);
+    color:var(--muted);
+    font-style:italic;
+    margin:0 0 8px;
+  }
+
+  /* ---- manifesto body ---- */
+  .manifesto{margin-top:40px;}
+  .manifesto p{margin:0 0 20px;}
+  .lede{
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(20px,3.8vw,24px);
+    line-height:1.4;
+  }
+  .reject{
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(22px,4.4vw,28px);
+    color:var(--paper);
+    margin:26px 0;
+  }
+  strong{
+    color:var(--paper);
+    font-weight:600;
+  }
+  .term{
+    color:var(--brass);
+    font-weight:500;
+    font-style:normal;
+  }
+  .pull{
+    margin:34px 0;
+    padding:22px 24px;
+    border-left:2px solid var(--brass);
+    background:var(--panel);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(19px,3.6vw,23px);
+    line-height:1.42;
+  }
+
+  .rule{
+    border:0;
+    border-top:1px solid var(--hair);
+    margin:44px 0;
+  }
+
+  .sign{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .sign .name{color:var(--paper);}
+
+  /* ---- claim extension ---- */
+  .extension{
+    margin-top:8px;
+    padding-top:8px;
+  }
+  .ext-stamp{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    text-transform:uppercase;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    align-items:baseline;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--hair);
+  }
+  .ext-stamp .filed{color:var(--brass);}
+  .ext-stamp .id{margin-left:auto;}
+  .ext-note{
+    color:var(--muted);
+    font-size:15px;
+    font-style:italic;
+    font-family:"Newsreader",Georgia,serif;
+    margin:18px 0 24px;
+  }
+  .deflist{
+    margin:0;
+  }
+  .deflist .item{
+    margin:0 0 18px;
+  }
+
+  /* ---- provenance stamp ---- */
+  .prov{
+    margin:0;
+    border:1px solid var(--hair);
+    border-radius:2px;
+    background:var(--panel);
+  }
+  .prov-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:5px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--hair);
+  }
+  .prov-row:last-child{border-bottom:0;}
+  .prov dt{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .prov dd{
+    margin:0;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px;
+    color:var(--paper);
+  }
+  .prov dd.hash{
+    color:var(--brass);
+    word-break:break-all;
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  /* ---- capture ---- */
+  .capture{
+    margin-top:56px;
+    padding:30px clamp(22px,5vw,34px);
+    background:var(--panel);
+    border:1px solid var(--hair);
+    border-radius:2px;
+  }
+  .capture h2{
+    font-family:"Newsreader",Georgia,serif;
+    font-weight:500;
+    font-size:clamp(22px,4.6vw,28px);
+    margin:0 0 6px;
+  }
+  .capture p.sub{
+    color:var(--muted);
+    margin:0 0 22px;
+    font-size:15.5px;
+  }
+  .field{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  input[type=email]{
+    flex:1 1 240px;
+    min-width:0;
+    background:var(--ink);
+    border:1px solid var(--hair);
+    border-radius:2px;
+    color:var(--paper);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:15px;
+    padding:14px 16px;
+    transition:border-color .15s ease;
+  }
+  input[type=email]::placeholder{color:#4E5A64;}
+  input[type=email]:focus{
+    outline:none;
+    border-color:var(--teal);
+    box-shadow:0 0 0 1px var(--teal);
+  }
+  button{
+    flex:0 0 auto;
+    background:var(--brass);
+    color:#15110A;
+    border:none;
+    border-radius:2px;
+    font-family:"IBM Plex Mono",monospace;
+    font-weight:500;
+    font-size:14px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:14px 22px;
+    cursor:pointer;
+    transition:transform .12s ease, background .15s ease;
+  }
+  button:hover{background:#D9B45C;}
+  button:active{transform:translateY(1px);}
+  button:focus-visible,
+  input:focus-visible,
+  a:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:2px;
+  }
+  .note{
+    margin-top:14px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.03em;
+  }
+
+  /* success state — reads like a stamped receipt */
+  .ok{
+    display:none;
+    border-left:2px solid var(--teal);
+    padding:18px 20px;
+    background:var(--ink);
+  }
+  .ok.show{display:block;}
+  .ok .k{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--teal);
+  }
+  .ok .v{margin-top:6px;font-size:15.5px;}
+
+  footer{
+    margin-top:64px;
+    padding-top:22px;
+    border-top:1px solid var(--hair);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+
+    <div class="stamp">
+      <span><span class="filed">Claim Filed</span> · 2026-06-16</span>
+      <span>Pickering Design Group</span>
+      <span class="id">Ref · PDG-CL-2026-0616</span>
+    </div>
+
+    <p class="eyebrow">A Manifesto</p>
+    <h1>What you build with a machine <em>is yours.</em></h1>
+    <p class="deck">Cognitive Layers — owned, carried, and traded. Not rented.</p>
+
+    <div class="manifesto">
+      <p class="lede">For two years the story of AI has been a story about access. Rent the model. Rent the context. Rent the memory. Pay every month for the privilege of starting over.</p>
+
+      <p class="reject">We reject that.</p>
+
+      <p>What you build with a machine is yours. The structure of your thinking — refined, organized, made durable — is not a chat log to be thrown away at the end of a session. It is an asset. It can be held, improved, carried, transferred, and sold.</p>
+
+      <p>We call it a <span class="term">Cognitive Layer</span>: a portable, user-owned cognitive structure. A <span class="term">Persistent Cognitive Structure</span>, not a saved chat. A <strong>deployable state, not a transcript.</strong></p>
+
+      <p><span class="term">The Exchange</span> is the marketplace where Cognitive Layers are owned and moved between people — firsthand and secondhand, bought, sold, and bid on. The right to resell is not a feature. It is the proof. You cannot resell what you do not own. A platform that forbids resale was never giving you ownership; it was renting you access and calling it yours.</p>
+
+      <div class="pull">Trust is infrastructure; access is a gate, not a flag. We own the gate. We do not sell the gate, and we do not sell you.</div>
+
+      <p>The pipeline between two people who own their work is free and belongs to them. Where a Cognitive Layer is delivered, it is <span class="term">server-rendered at inject time</span> — it arrives as a deployable state, never as raw material to be copied or harvested. <em>How</em> that rendering works is ours. <em>That</em> it works this way is our promise to you.</p>
+
+      <p>This is an <span class="term">architecture of minds</span>. The layers belong to the people who build them. The model providers are guests who pay to reach the marketplace — they do not own the floor, and they never own you.</p>
+
+      <p>Today we stake the category, the vocabulary, and the principle. The product follows. The trail is claimed.</p>
+
+      <hr class="rule" />
+
+      <p class="sign">
+        <span class="name">Jason Pickering</span>, Founder<br />
+        Pickering Design Group<br />
+        June 16, 2026
+      </p>
+    </div>
+
+    <!-- ───────────── CLAIM EXTENSION · PDG-CL-2026-0623 ─────────────
+         Additive. The original claim PDG-CL-2026-0616 above is unchanged
+         and its priority date stands. This section extends the public
+         record with four further terms. -->
+    <section class="extension" aria-label="Claim extension">
+      <div class="ext-stamp">
+        <span><span class="filed">Claim Extension</span> · 2026-06-24</span>
+        <span>Pickering Design Group</span>
+        <span class="id">Ref · PDG-CL-2026-0623</span>
+      </div>
+
+      <p class="eyebrow">Further Terms Staked</p>
+      <p class="ext-note">Extends, does not supersede, the claim filed 2026-06-16 (PDG-CL-2026-0616). The original claim and its date stand. The following terms are added to the public record of conception and disclosure.</p>
+
+      <div class="deflist manifesto">
+        <p class="item">The <span class="term">Persistence Layer</span> is the infrastructure that carries a Cognitive Layer intact across sessions, devices, and models. Not storage, not recall — the durable substrate on which a Persistent Cognitive Structure is transported and re-instantiated. The Exchange runs on the Persistence Layer.</p>
+
+        <p class="item"><span class="term">Tradeable Cognitive Layers</span> are Cognitive Layers held as transferable assets — carrying the right to sell, gift, and resell. Ownership of a layer includes the right to alienate it. A layer that cannot be transferred is custody, not ownership.</p>
+
+        <p class="item"><span class="term">What survives translation between models</span> is what was owned: the structure, frameworks, vocabulary, and decision patterns of a Cognitive Layer that persist when it moves between distinct AI systems — as opposed to any single model's phrasing.</p>
+
+        <div class="pull"><span class="term">The portal is not the AI; the portal is the continuity between minds.</span> The platform is not the model and does not claim to be. It is the connective layer that carries human cognitive structure across tools, across time, and between people.</div>
+      </div>
+
+      <hr class="rule" />
+
+      <p class="sign">
+        <span class="name">Jason Pickering</span>, Founder<br />
+        Pickering Design Group<br />
+        June 24, 2026
+      </p>
+    </section>
+
+    <!-- ───────────── PROVENANCE STAMP · PDG-CL-2026-0627 ─────────────
+         Additive. Claims PDG-CL-2026-0616 and PDG-CL-2026-0623 above are
+         unchanged and their priority dates stand. This section stakes
+         authorship of the first Cognitive Layer by binding a content
+         hash to the author identity. The layer's contents are NOT
+         disclosed here — only the fingerprint. -->
+    <section class="extension" aria-label="Provenance stamp">
+      <div class="ext-stamp">
+        <span><span class="filed">Provenance Stamp</span> · 2026-06-27</span>
+        <span>Pickering Design Group</span>
+        <span class="id">Ref · PDG-CL-2026-0627</span>
+      </div>
+
+      <p class="eyebrow">Creator Provenance · Cognitive Layer #001</p>
+      <p class="ext-note">Extends, does not supersede, the claims filed 2026-06-16 and 2026-06-24; their priority dates stand. This record stakes authorship of the first Cognitive Layer composed under the Cognitive Layer Schema Standard v1.0.0. The layer's eight components are canonicalized and hashed; that SHA-256 fingerprint is bound to the author identity as immutable creator IP. The contents of the layer are not published here — the fingerprint is. This published record, together with the deploy-log timestamp, constitutes a dated third-party record of authorship.</p>
+
+      <dl class="prov">
+        <div class="prov-row"><dt>Layer</dt><dd>PDG-LAYER-001 · v1.0.0</dd></div>
+        <div class="prov-row"><dt>Author</dt><dd>jp@pickeringdesigngroup.com</dd></div>
+        <div class="prov-row"><dt>Content hash · SHA-256, components 1–8</dt><dd class="hash">3ee656d6b2e0a524133ffc6ad7977450843d2331fec954ad02e5ac34b66b5855</dd></div>
+        <div class="prov-row"><dt>Chain head · entry hash</dt><dd class="hash">951b4325f72b1ec8682667020d03c5d6ff16c324cf6aca0b999138075ab532fc</dd></div>
+        <div class="prov-row"><dt>Stamped · UTC</dt><dd>2026-06-27T23:20:49Z</dd></div>
+      </dl>
+
+      <hr class="rule" />
+
+      <p class="sign">
+        <span class="name">Jason Pickering</span>, Founder<br />
+        Pickering Design Group<br />
+        June 27, 2026
+      </p>
+    </section>
+
+    <section class="capture" aria-labelledby="join">
+      <h2 id="join">Stake your place on the trail.</h2>
+      <p class="sub">The Exchange is not yet open. This page stands as the dated record of the claim above.</p>
+
+      <p class="note">This page collects nothing. No form, no analytics, no cookies.</p>
+    </section>
+
+    <footer>
+      © 2026 Pickering Design Group · All claims reserved
+    </footer>
+
+  </main>
+
+</body>
+</html>
