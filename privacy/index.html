@@ -54,7 +54,7 @@
 <h2>4. When data leaves your device</h2>
 <p>Your conversation text leaves your device only in the following optional cases:</p>
 <ul>
-  <li><strong>AI summarization (Pro).</strong> If you activate Hi_Fidelity Pro with a license key, conversation text is sent to our proxy server, which forwards it to Google's Gemini API to generate a summary. The text is not retained on our servers after processing. Free accounts do not use this path — they receive locally generated, non-AI summaries.</li>
+  <li><strong>AI state compression (Pro).</strong> If you activate Hi_Fidelity Pro with a license key, conversation text is sent to our proxy server, which forwards it to Google's Gemini API. The model compresses the conversation into a structured memory object — decisions made, blockers hit, open questions, next action — so the state can be restored in another chat. The text is not retained on our servers after processing. Free accounts do not use this path; their memory object is built locally, without AI.</li>
   <li><strong>Bring Your Own Key.</strong> If you enter your own Anthropic (Claude) API key or your own Google Gemini API key, conversation text is sent directly from your browser to that provider. It never passes through our servers, and your key is stored only on your device.</li>
   <li><strong>License verification.</strong> If a Pro license key is saved in settings, the extension periodically sends the license key and your device identifier to our server to confirm subscription status. No conversation data is included in that request.</li>
 </ul>
@@ -62,7 +62,7 @@
 
 <h2>5. Third-party services</h2>
 <ul>
-  <li><strong>Google (Gemini API)</strong> — the default engine for AI summarization for Pro users via our proxy, and also used directly if you supply your own Gemini key. See <a href="https://policies.google.com/privacy">Google's privacy policy</a>.</li>
+  <li><strong>Google (Gemini API)</strong> — the default engine for AI state compression for Pro users via our proxy, and also used directly if you supply your own Gemini key. See <a href="https://policies.google.com/privacy">Google's privacy policy</a>.</li>
   <li><strong>Anthropic (Claude API)</strong> — used only if you supply your own Anthropic API key. See <a href="https://www.anthropic.com/privacy">Anthropic's privacy policy</a>.</li>
   <li><strong>Stripe</strong> — payment processing for Pro subscriptions. See <a href="https://stripe.com/privacy">Stripe's privacy policy</a>.</li>
   <li><strong>Gumroad</strong> — alternative payment option for Pro licenses. See <a href="https://gumroad.com/privacy">Gumroad's privacy policy</a>.</li>
@@ -71,7 +71,7 @@
 </ul>
 
 <h2>6. Data sharing</h2>
-<p>We do not sell, trade, or share your data with third parties. Conversation text is sent only to Google's Gemini API, or to a provider whose key you supplied, and only for the purpose of generating a summary you asked for. Your license key and device identifiers are used only for subscription and device-limit enforcement — never for advertising, profiling, or resale.</p>
+<p>We do not sell, trade, or share your data with third parties. Conversation text is sent only to Google's Gemini API, or to a provider whose key you supplied, and only to build the structured memory object you asked for. Your license key and device identifiers are used only for subscription and device-limit enforcement — never for advertising, profiling, or resale.</p>
 
 <h2>7. Data retention and deletion</h2>
 <p>Your conversations are stored locally in your browser. You can delete any individual session from within the extension at any time. Uninstalling the extension permanently removes all locally stored data.</p>
