@@ -114,6 +114,7 @@
     <div class="row"><dt>Author (inside the hash, component 4)</dt><dd>jp@pickeringdesigngroup.com</dd></div>
     <div class="row"><dt>Content hash</dt><dd class="hash">3ee656d6b2e0a524133ffc6ad7977450843d2331fec954ad02e5ac34b66b5855</dd></div>
     <div class="row"><dt>Chain head</dt><dd class="hash">951b4325f72b1ec8682667020d03c5d6ff16c324cf6aca0b999138075ab532fc</dd></div>
+    <div class="row"><dt>Ed25519 public key</dt><dd class="hash">5a06b22bbc9efe364f8f4d761ac5d42c3ff96ace8f45a87f13ca8dc8861b0b89</dd></div>
   </dl>
 
   <h2>The files</h2>
@@ -124,6 +125,10 @@
       <span>The append-only chain.</span></div>
     <div class="file"><a href="provenance.py">provenance.py</a>
       <span>The verifier. Python 3 stdlib only — no dependencies, nothing to install.</span></div>
+    <div class="file"><a href="chain_signature.json">chain_signature.json</a>
+      <span>Ed25519 signature over the chain head.</span></div>
+    <div class="file"><a href="ed25519_ref.py">ed25519_ref.py</a>
+      <span>Signature checker. Stdlib only. Ships with the RFC 8032 test vector.</span></div>
   </div>
 
   <h2>Verify it</h2>
@@ -144,10 +149,23 @@ curl -O https://hifidelity.app/verify/provenance.py</code></pre></li>
       to the logged value. Expect <code>MATCH — this exact content was stamped.</code>
       Change one character in the JSON and it will fail.</p></li>
 
-    <li><b>Or skip our tool entirely.</b>
-      <p>The hash is a SHA-256 over components 1–8 canonicalized as JSON with sorted
-      keys and no whitespace. Compute it however you like — the point is that you do
-      not have to trust the script we wrote.</p></li>
+    <li><b>Check the signature.</b>
+      <pre><code>python3 provenance.py verifysig</code></pre>
+      <p>The chain head is signed with Ed25519. This confirms the signature verifies
+      under the public key above — that the holder of that key asserts this chain,
+      not merely that the content exists.</p></li>
+
+    <li><b>Or skip our tools entirely.</b>
+      <p>The content hash is a SHA-256 over components 1–8 canonicalized as JSON with
+      sorted keys and no whitespace. The signature is <strong>standard Ed25519</strong>
+      over the 64-character chain-head string, UTF-8 encoded — verifiable with
+      <code>openssl</code>, <code>ssh-keygen</code>, PyNaCl, python-cryptography, or
+      any library you already trust.</p>
+      <p>That is the point. Our verifier is a convenience, not a dependency. Nothing
+      about this claim requires you to trust code we wrote — and
+      <code>ed25519_ref.py</code> ships with the RFC 8032 test vector so you can
+      confirm it is a correct implementation before running it:</p>
+      <pre><code>python3 ed25519_ref.py</code></pre></li>
   </ol>
 
   <hr class="rule" />
@@ -159,10 +177,17 @@ curl -O https://hifidelity.app/verify/provenance.py</code></pre></li>
   inside the hash rather than attached to it — the email cannot be swapped without
   changing the content hash.</p>
 
-  <p><strong>It does not prove</strong> authorship on its own. This chain is
-  unsigned. A hash establishes that content existed in a fixed form; it does not
-  establish who created it. Signing is a separate mechanism and we would rather say
-  that plainly than let the word "verified" do work it hasn't earned.</p>
+  <p><strong>It proves</strong> that the holder of the published Ed25519 key asserts
+  this chain. A hash alone establishes that content existed in a fixed form; anyone
+  can compute a SHA-256. The signature binds the claim to a key only its holder can
+  use.</p>
+
+  <p><strong>It does not prove</strong> when the key was held. The signature is dated
+  <strong>6 August 2026</strong>, so it attests the chain as of that date — it does
+  not independently establish the June stamp. Nor does a signature establish identity
+  on its own: it proves control of a key, and the link between that key and a person
+  is a separate matter. We would rather state this than let the word "verified" do
+  work it hasn't earned.</p>
 
   <div class="note">
     <b>Independent record</b>

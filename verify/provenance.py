@@ -240,6 +240,113 @@ def cmd_head(args):
 
 
 # ----------------------------------------------------------------------------
+# Ed25519 attestation (v1.1)
+#
+# The chain proves content existed in a fixed form. It does NOT prove who made
+# it — anyone can compute a SHA-256. Signing the chain head with a key only the
+# author holds closes that gap: "the holder of this key asserts this chain."
+#
+# The signature is standard Ed25519. A verifier who does not trust
+# ed25519_ref.py can check it with openssl, ssh-keygen, PyNaCl, or anything
+# else. That is the point — the artifact does not depend on our code.
+# ----------------------------------------------------------------------------
+KEY_DIR        = ".keys"                      # gitignored — never committed
+PRIVATE_KEY    = ".keys/pdg-ed25519.seed"
+SIGNATURE_FILE = "chain_signature.json"
+
+
+def _load_ed():
+    try:
+        import ed25519_ref
+        return ed25519_ref
+    except ImportError:
+        sys.exit("ed25519_ref.py must sit next to provenance.py.")
+
+
+def cmd_keygen(args):
+    ed = _load_ed()
+    if os.path.exists(PRIVATE_KEY) and not args.force:
+        sys.exit(f"Key already exists at {PRIVATE_KEY}\n"
+                 "Refusing to overwrite — a new key invalidates every prior\n"
+                 "signature. Pass --force only if you are certain.")
+    os.makedirs(KEY_DIR, exist_ok=True)
+    seed = os.urandom(32)
+    fd = os.open(PRIVATE_KEY, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "wb") as f:
+        f.write(seed)
+    pk = ed.publickey(seed)
+    print("KEYPAIR GENERATED")
+    print(f"  private seed : {PRIVATE_KEY}  (0600)")
+    print(f"  public key   : {pk.hex()}")
+    print()
+    print("  The private seed is NEVER committed — provenance/.keys/ is gitignored.")
+    print("  Back it up offline. Losing it means you can never sign as this identity")
+    print("  again; leaking it means someone else can.")
+
+
+def cmd_sign(args):
+    ed = _load_ed()
+    if not os.path.exists(PRIVATE_KEY):
+        sys.exit("No key found. Run:  python3 provenance.py keygen")
+    log = read_jsonl(PROVENANCE_LOG)
+    if not log:
+        sys.exit("Chain is empty — nothing to sign.")
+    head = chain_head(log)
+    with open(PRIVATE_KEY, "rb") as f:
+        seed = f.read()
+    pk = ed.publickey(seed)
+    msg = head.encode("utf-8")
+    sig = ed.signature(msg, seed, pk)
+    if not ed.checkvalid(sig, msg, pk):
+        sys.exit("Self-check failed — refusing to write a bad signature.")
+    record = {
+        "algorithm": "Ed25519",
+        "signed_at_utc": now_utc(),
+        "chain_head": head,
+        "public_key": pk.hex(),
+        "signature": sig.hex(),
+        "message": "the chain_head string above, UTF-8 encoded",
+        "author": log[0].get("author", ""),
+    }
+    with open(SIGNATURE_FILE, "w") as f:
+        f.write(canonical(record) + "\n")
+    print("CHAIN HEAD SIGNED")
+    print(f"  chain_head : {head}")
+    print(f"  public_key : {pk.hex()}")
+    print(f"  signature  : {sig.hex()}")
+    print(f"  written to : {SIGNATURE_FILE}")
+
+
+def cmd_verifysig(args):
+    ed = _load_ed()
+    path = args.file or SIGNATURE_FILE
+    if not os.path.exists(path):
+        sys.exit(f"No signature file at {path}")
+    with open(path) as f:
+        rec = json.load(f)
+    log = read_jsonl(PROVENANCE_LOG)
+    head = chain_head(log)
+    ok = ed.checkvalid(
+        bytes.fromhex(rec["signature"]),
+        rec["chain_head"].encode("utf-8"),
+        bytes.fromhex(rec["public_key"]),
+    )
+    if not ok:
+        sys.exit("SIGNATURE INVALID — does not verify under the stated public key.")
+    print("SIGNATURE VALID")
+    print(f"  public_key : {rec['public_key']}")
+    print(f"  signed_at  : {rec['signed_at_utc']}")
+    print(f"  covers head: {rec['chain_head']}")
+    if rec["chain_head"] != head:
+        print()
+        print("  NOTE: the signature is valid but covers an EARLIER chain head.")
+        print(f"        current head is {head}")
+        print("        Re-run `sign` to attest the current state.")
+    else:
+        print("  Signature covers the CURRENT chain head.")
+
+
+# ----------------------------------------------------------------------------
 # CLI
 # ----------------------------------------------------------------------------
 def main():
@@ -267,6 +374,18 @@ def main():
 
     h = sub.add_parser("head", help="Print the current chain head.")
     h.set_defaults(func=cmd_head)
+
+    kg = sub.add_parser("keygen", help="Generate an Ed25519 keypair (one time).")
+    kg.add_argument("--force", action="store_true",
+                    help="Overwrite an existing key. Invalidates prior signatures.")
+    kg.set_defaults(func=cmd_keygen)
+
+    sg = sub.add_parser("sign", help="Sign the current chain head.")
+    sg.set_defaults(func=cmd_sign)
+
+    vs = sub.add_parser("verifysig", help="Verify a chain-head signature.")
+    vs.add_argument("--file", default=None, help="Path to chain_signature.json.")
+    vs.set_defaults(func=cmd_verifysig)
 
     args = p.parse_args()
     args.func(args)
