@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verify the Claim — PDG-LAYER-001</title>
+<meta name="description" content="Independently verify the Pickering Design Group provenance claim. Content hash, chain head, and the tool to check them yourself." />
+<meta property="og:title" content="Verify the Claim — PDG-LAYER-001" />
+<meta property="og:description" content="Don't take our word for it. Download the layer, the log, and the verifier, and run it yourself." />
+<meta property="og:type" content="website" />
+<style>
+  :root{
+    --ink:#0B0E11; --panel:#141A1F; --hair:#26303A; --paper:#E9E6DF;
+    --muted:#7C8893; --brass:#C9A24B; --teal:#3FB7A6; --maxw:760px;
+    --serif:ui-serif,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:var(--sans); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--hair) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+    background-size:64px 64px; opacity:.05; pointer-events:none; z-index:0;
+  }
+  .wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto;
+    padding:clamp(28px,7vw,72px) clamp(20px,6vw,40px) 80px;}
+  .stamp{
+    font-family:var(--mono); font-size:12px; letter-spacing:.08em;
+    color:var(--muted); text-transform:uppercase; display:flex;
+    flex-wrap:wrap; gap:6px 18px; align-items:baseline;
+    padding-bottom:18px; border-bottom:1px solid var(--hair);
+  }
+  .stamp .brand{color:var(--brass);}
+  h1{font-family:var(--serif); font-weight:400; font-size:clamp(32px,6.5vw,48px);
+    line-height:1.06; letter-spacing:-.012em; margin:44px 0 12px;}
+  h1 em{font-style:italic; color:var(--brass);}
+  .deck{font-family:var(--serif); font-size:clamp(18px,3.4vw,21px);
+    color:var(--muted); font-style:italic; margin:0 0 8px;}
+  h2{font-family:var(--mono); font-size:12.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--brass); margin:48px 0 16px; font-weight:400;}
+  p{margin:0 0 18px;}
+  strong{color:var(--paper); font-weight:600;}
+  a{color:var(--brass); text-decoration:none; border-bottom:1px solid rgba(201,162,75,.35);}
+  a:hover{border-bottom-color:var(--brass);}
+  .rule{border:0; border-top:1px solid var(--hair); margin:40px 0;}
+
+  dl.facts{margin:0; border:1px solid var(--hair); border-radius:2px; background:var(--panel);}
+  .row{padding:14px 18px; border-bottom:1px solid var(--hair);}
+  .row:last-child{border-bottom:0;}
+  dt{font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:5px;}
+  dd{margin:0; font-family:var(--mono); font-size:14px; color:var(--paper);}
+  dd.hash{color:var(--brass); word-break:break-all; font-size:13px; line-height:1.5;}
+
+  pre{background:var(--panel); border:1px solid var(--hair); border-radius:2px;
+    padding:16px 18px; overflow-x:auto; font-family:var(--mono);
+    font-size:13.5px; line-height:1.6; color:var(--paper); margin:0 0 18px;}
+  code{font-family:var(--mono); font-size:.92em; color:var(--brass);}
+  pre code{color:inherit; font-size:inherit;}
+
+  ol.steps{padding-left:0; list-style:none; counter-reset:s; margin:0;}
+  ol.steps li{counter-increment:s; position:relative; padding:0 0 22px 42px;}
+  ol.steps li::before{content:counter(s,decimal-leading-zero); position:absolute;
+    left:0; top:3px; font-family:var(--mono); font-size:12px;
+    color:var(--brass); letter-spacing:.08em;}
+  ol.steps b{display:block; color:var(--paper); margin-bottom:6px;}
+
+  .files{display:grid; grid-template-columns:1fr; gap:10px; margin:0;}
+  @media(min-width:600px){.files{grid-template-columns:repeat(3,1fr);}}
+  .file{border:1px solid var(--hair); border-radius:2px; background:var(--panel);
+    padding:16px 18px;}
+  .file a{font-family:var(--mono); font-size:13px; border-bottom:none;}
+  .file span{display:block; color:var(--muted); font-size:13px; margin-top:5px;}
+
+  .note{border-left:2px solid var(--teal); background:var(--panel);
+    padding:18px 22px; margin:0 0 18px; color:var(--muted); font-size:15.5px;}
+  .note b{color:var(--teal); font-family:var(--mono); font-size:12px;
+    letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:6px;}
+
+  footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--hair);
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:8px 22px;}
+  footer .who{width:100%; margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="stamp">
+    <span class="brand">PDG-LAYER-001</span>
+    <span>Pickering Design Group</span>
+  </div>
+
+  <h1>Don't take our word for it. <em>Run it yourself.</em></h1>
+  <p class="deck">Everything needed to verify the claim independently is on this page.</p>
+
+  <p>Pickering Design Group stamped a Cognitive Layer — a framework set describing
+  user-owned, portable AI context — on <strong>27 June 2026</strong>. The claim is a
+  SHA-256 hash chain. A hash proves nothing without the content it covers, so the
+  content, the log, and the verifier are all published below.</p>
+
+  <h2>The record</h2>
+  <dl class="facts">
+    <div class="row"><dt>Layer</dt><dd>PDG-LAYER-001 · v1.0.0</dd></div>
+    <div class="row"><dt>Stamped</dt><dd>2026-06-27T23:20:49Z</dd></div>
+    <div class="row"><dt>Author (inside the hash, component 4)</dt><dd>jp@pickeringdesigngroup.com</dd></div>
+    <div class="row"><dt>Content hash</dt><dd class="hash">3ee656d6b2e0a524133ffc6ad7977450843d2331fec954ad02e5ac34b66b5855</dd></div>
+    <div class="row"><dt>Chain head</dt><dd class="hash">951b4325f72b1ec8682667020d03c5d6ff16c324cf6aca0b999138075ab532fc</dd></div>
+  </dl>
+
+  <h2>The files</h2>
+  <div class="files">
+    <div class="file"><a href="PDG-LAYER-001.json">PDG-LAYER-001.json</a>
+      <span>The claimed content.</span></div>
+    <div class="file"><a href="provenance_log.jsonl">provenance_log.jsonl</a>
+      <span>The append-only chain.</span></div>
+    <div class="file"><a href="provenance.py">provenance.py</a>
+      <span>The verifier. Python 3 stdlib only — no dependencies, nothing to install.</span></div>
+  </div>
+
+  <h2>Verify it</h2>
+  <ol class="steps">
+    <li><b>Download all three into one folder.</b>
+      <pre><code>curl -O https://hifidelity.app/verify/PDG-LAYER-001.json
+curl -O https://hifidelity.app/verify/provenance_log.jsonl
+curl -O https://hifidelity.app/verify/provenance.py</code></pre></li>
+
+    <li><b>Check the chain is internally consistent.</b>
+      <pre><code>python3 provenance.py verify</code></pre>
+      <p>Each record links to the one before it by hash, so altering any past entry
+      breaks every entry after it. Expect <code>CHAIN OK</code>.</p></li>
+
+    <li><b>Check the content matches the stamp.</b>
+      <pre><code>python3 provenance.py check PDG-LAYER-001.json</code></pre>
+      <p>This recomputes the hash from the file you just downloaded and compares it
+      to the logged value. Expect <code>MATCH — this exact content was stamped.</code>
+      Change one character in the JSON and it will fail.</p></li>
+
+    <li><b>Or skip our tool entirely.</b>
+      <p>The hash is a SHA-256 over components 1–8 canonicalized as JSON with sorted
+      keys and no whitespace. Compute it however you like — the point is that you do
+      not have to trust the script we wrote.</p></li>
+  </ol>
+
+  <hr class="rule" />
+
+  <h2>What this proves, and what it doesn't</h2>
+
+  <p><strong>It proves</strong> that this exact content existed as a single unaltered
+  unit, that the chain has not been rewritten, and that the author identity is bound
+  inside the hash rather than attached to it — the email cannot be swapped without
+  changing the content hash.</p>
+
+  <p><strong>It does not prove</strong> authorship on its own. This chain is
+  unsigned. A hash establishes that content existed in a fixed form; it does not
+  establish who created it. Signing is a separate mechanism and we would rather say
+  that plainly than let the word "verified" do work it hasn't earned.</p>
+
+  <div class="note">
+    <b>Independent record</b>
+    The page carrying these hashes is archived by the Internet Archive, which is
+    not operated by us. That capture is dated 6 August 2026 — it corroborates the
+    hashes, not the June date. The June date rests on the chain itself and on a
+    contemporaneous timestamped email record.
+  </div>
+
+  <p>We publish the limits alongside the claim because a claim nobody can check is
+  a slogan. Trust is built into how a system operates — local-first, transparent,
+  user-owned — not asserted as a label.</p>
+
+  <footer>
+    <span class="who">Pickering Design Group — Systems of Trust · Local First · Portability · Integrity</span>
+    <a href="/">Hi_Fidelity</a>
+    <a href="https://exchange.pickeringdesigngroup.com/">The Exchange</a>
+    <a href="/privacy/">Privacy</a>
+  </footer>
+
+</div>
+</body>
+</html>

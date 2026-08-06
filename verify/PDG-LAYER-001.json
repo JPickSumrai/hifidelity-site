@@ -1,0 +1,56 @@
+{
+  "layer_id": "PDG-LAYER-001",
+  "version": "1.0.0",
+  "domain": "Systems of trust and transparency. Load-bearing infrastructure that makes a person's accumulated thinking durable, portable, and owned, independent of any single platform. Build what holds weight; repeat what is worth building on.",
+  "author": "jp@pickeringdesigngroup.com",
+  "frameworks": [
+    {
+      "name": "Load-Bearing, Not Decorative",
+      "principle": "Build only what holds weight, what the next thing can stand on. If it does not bear load, it is decoration."
+    },
+    {
+      "name": "User-Owned Continuity",
+      "principle": "The accumulated thinking, the context, frameworks, philosophy, and momentum, belongs to the person who created it, not the platform that hosted it. The continuity is theirs; the file is theirs."
+    },
+    {
+      "name": "Trust as Infrastructure",
+      "principle": "Trust is built into how the system operates, local-first, transparent, user-owned, not asserted as a label. Access is a gate, not a flag."
+    },
+    {
+      "name": "Build and Repeat What Is Worth Building On",
+      "principle": "Find the durable pattern, build it once and build it right, then reuse it so each build compounds instead of resetting."
+    },
+    {
+      "name": "Doorway, Not House",
+      "principle": "Ship a small claim-staking wedge to start the flywheel while the real, durable vessel is built. The wedge is the door, not the house."
+    },
+    {
+      "name": "Own the Lever",
+      "principle": "Control the part of the stack that becomes leverage over you if someone else owns it. Own the inference layer; retain ownership of what is built with AI rather than reselling access to someone else's."
+    }
+  ],
+  "vocabulary": [
+    {"term": "The portal is not the AI; the portal is the continuity between minds", "meaning": "The product is the continuity, not the model. Models are interchangeable; the continuity is the asset."},
+    {"term": "If it doesn't hold weight, it's decoration", "meaning": "The test for whether a thing is infrastructure or ornament."},
+    {"term": "The continuity is yours. The file is yours.", "meaning": "User ownership stated plainly; the platform is a host, not an owner."},
+    {"term": "Trust is infrastructure; access is a gate, not a flag", "meaning": "Trust is operated, not labeled."},
+    {"term": "The models are just plastic you press buttons on", "meaning": "Anti-mysticism. The model is a replaceable surface; the durable structure underneath is what matters."},
+    {"term": "The tool should lead, follow, or get out of the way", "meaning": "No sentiment. A tool works or it is a liability."}
+  ],
+  "decision_patterns": [
+    {"name": "Claim before ship", "rule": "Securing the dated claim is cheap and fast; shipping is slow. They are separable; do the claim first."},
+    {"name": "Counsel before contractor", "rule": "Close legal and IP gates before unfreezing build. Sequence people by what is irreversible."},
+    {"name": "Firewall the contractor", "rule": "Scope tightly to the work surface; reveal nothing about the thesis, architecture, or adjacent products."},
+    {"name": "Owner identity vs. worker identity", "rule": "Legal, money, and IP on the owner identity; product and operational work on a separate worker identity. Never cross them."},
+    {"name": "Keep the entity clean", "rule": "Capital enters as a personal loan to the founder, not to the LLC; preserve single-member disregarded status; spin out sub-entities only when revenue justifies it."},
+    {"name": "Underwrite on the floor", "rule": "Build on the credible asset-backed floor. Treat speculative upside as trajectory, never as a schedule."}
+  ],
+  "heuristics": [
+    "If a secret touches a casual channel, it is burned.",
+    "New key, update consumers, verify, revoke old. Never revoke first.",
+    "Founder deploys; the contractor stages. No production tokens over an outside channel, ever.",
+    "Stake the claim with a dated, content-hashed artifact before you speak it aloud.",
+    "Do not let the rename gate the filings; parallel-track the naming.",
+    "Build it once, build it right, build it to be built upon."
+  ]
+}
